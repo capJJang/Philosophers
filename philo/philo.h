@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/03/30 00:32:51 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/01 05:19:55 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,25 @@ typedef struct s_rule
 
 typedef struct s_philo
 {
-	t_rule		rule;
+	pthread_t	thread;
+	t_rule		*rule;
 	int			i;
 }				t_philo;
-
-typedef struct s_table
-{
-}				t_table;
 
 int		argv_validation(int argc, char *argv[], t_rule *rule);
 void	*init_mutex(int num_of_forks);
 int		print_err_invalid_arg(void);
 int		ft_atoi(char *s);
 
+//init funcs start
+t_philo	**init_philo(t_rule rule);
+void	*init_mutex(int num_of_forks);
+//init funcs end
+
+//free funcs start
+int		free_forks(pthread_mutex_t *forks, int num_of_philos);
+t_philo	**free_philo(t_philo **philo, int num_of_philos);
+int		free_forks_and_philo(pthread_mutex_t *forks, t_philo **philo, \
+		int philo_cnt);
+//free funcs end
 #endif
