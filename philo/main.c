@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:20:11 by segan             #+#    #+#             */
-/*   Updated: 2023/04/02 06:03:09 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/03 14:19:56 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	main(int argc, char *argv[])
 	philo = init_philo(rule, forks);
 	if (philo == NULL)
 		return (free_forks_and_philo(forks, philo, rule.num_of_philos));
-	//dining(philo, rule, forks);
+	enter_dining_room(philo);
 	//free_forks_and_philo(forks, philo, rule.num_of_philos);
 }

@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 03:10:15 by segan             #+#    #+#             */
-/*   Updated: 2023/04/02 05:37:34 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/03 12:07:33 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_philo	**free_philo(t_philo **philo, int num_of_philos)
 	return (0);
 }
 
-int	free_forks_and_philo(pthread_mutex_t *forks, t_philo **philo, int philo_cnt)
+int	free_forks_and_philo(pthread_mutex_t **forks, t_philo **philo, int philo_cnt)
 {
 	free_forks(forks, philo_cnt);
 	free_philo(philo, philo_cnt);

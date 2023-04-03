@@ -6,7 +6,7 @@
 #    By: segan <segan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/27 01:14:56 by segan             #+#    #+#              #
-#    Updated: 2023/04/03 09:43:21 by segan            ###   ########.fr        #
+#    Updated: 2023/04/03 13:33:52 by segan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,10 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = main.c validation.c init.c ft_atoi.c print_err/print_err.c \
+SRCS = main.c validation.c init.c ft_atoi.c\
+		print/print_err.c print/print_philo.c\
 		dining.c free.c
-
 OBJS = $(SRCS:.c=.o)
-
 
 all : $(NAME)
 
