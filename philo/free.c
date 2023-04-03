@@ -6,19 +6,22 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 03:10:15 by segan             #+#    #+#             */
-/*   Updated: 2023/04/01 05:19:36 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/02 05:37:34 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	free_forks(pthread_mutex_t *forks, int num_of_philos)
+pthread_mutex_t	**free_forks(pthread_mutex_t **forks, int num_of_philos)
 {
 	int	i;
 
 	i = 0;
 	while (i < num_of_philos)
-		pthread_mutex_destroy(&forks[i++]);
+	{
+		pthread_mutex_destroy(forks[i]);
+		free(forks[i++]);
+	}
 	free(forks);
 	return (0);
 }

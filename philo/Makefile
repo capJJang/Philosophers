@@ -6,7 +6,7 @@
 #    By: segan <segan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/27 01:14:56 by segan             #+#    #+#              #
-#    Updated: 2023/04/01 05:19:28 by segan            ###   ########.fr        #
+#    Updated: 2023/04/03 09:43:21 by segan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
-	rm -r $(OBJS)
+	rm -f $(OBJS)
 
 fclean :
 	make clean
