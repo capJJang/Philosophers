@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/03 15:36:15 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/04 13:11:54 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <limits.h>
-# include <printf.h>
+# include <stdio.h>
 
 typedef struct s_rule
 {
@@ -38,9 +38,15 @@ typedef struct s_philo
 	int				num_of_each_philo_eat;
 }				t_philo;
 
+//validation funcs start
 int				argv_validation(int argc, char *argv[], t_rule *rule);
 int				print_err_invalid_arg(void);
+//validation funcs end
+
 int				ft_atoi(char *s);
+//print util funcs start
+void	print_rule(t_rule rule);
+//print util funcs end
 
 //init funcs start
 t_philo			**init_philo(t_rule rule, pthread_mutex_t **forks);

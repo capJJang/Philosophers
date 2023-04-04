@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/03 15:37:34 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/04 14:35:51 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 void	*run_dining(void *philo)
 {
 	(void)philo;
-	//while (philo->num_of_each_philo_eat--)
-	//{
-	//	eating(philo);
-	//	thinking(philo);
-	//	sleeping(philo);
-	//}
+	while (1)
+	{
+		if (philo->num_of_each_philo_eat == 0)
+			return (NULL);
+		eating(philo);
+		thinking(philo);
+		sleeping(philo);
+	}
 	return (NULL);
 }
 
@@ -36,11 +38,14 @@ void	enter_dining_room(t_philo **philo)
 	else
 		join = false;
 	while (i < num_of_philos)
+		pthread_create(&philo[i]->thread, NULL, run_dining, philo[i++]);
+	i = 0;
+	while (i < num_of_philos)
 	{
-		pthread_create(&philo[i]->thread, NULL, run_dining, philo[i]);
 		if (join)
 			pthread_join(philo[i]->thread, NULL);
 		else
 			pthread_detach(philo[i]->thread);
+		i++;
 	}
 }

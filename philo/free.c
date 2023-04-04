@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 03:10:15 by segan             #+#    #+#             */
-/*   Updated: 2023/04/03 12:07:33 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/03 23:20:58 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ t_philo	**free_philo(t_philo **philo, int num_of_philos)
 	int	i;
 
 	i = 0;
-	while (i++ < num_of_philos)
-		free(philo[i]);
+	while (i < num_of_philos)
+		free(philo[i++]);
 	free(philo);
 	return (0);
 }
