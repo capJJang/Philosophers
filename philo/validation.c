@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:23:46 by segan             #+#    #+#             */
-/*   Updated: 2023/04/04 13:15:41 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/05 17:21:38 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	argv_validation(int argc, char *argv[], t_rule *rule)
 	|| rule->time_to_eat <= 0 || rule->time_to_sleep <= 0)
 		return (print_err_invalid_arg());
 	rule->num_of_each_phil_eat = -1;
-
 	if (argc == 6)
 	{
 		rule->num_of_each_phil_eat = ft_atoi(argv[5]);

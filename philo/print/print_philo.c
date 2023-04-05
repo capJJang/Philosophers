@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:01:15 by segan             #+#    #+#             */
-/*   Updated: 2023/04/04 13:10:18 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/05 16:04:50 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,9 @@ void	print_rule(t_rule rule)
 	printf("time to eat : %d\n", rule.time_to_eat);
 	printf("time to sleep : %d\n", rule.time_to_sleep);
 	printf("num of each philo eat : %d\n", rule.num_of_each_phil_eat);
+}
+
+void	print_philo_stat(long long time, int whoami, const char *stat)
+{
+	printf("%lld %d %s\n", time, whoami + 1, stat);
 }

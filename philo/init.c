@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 05:00:32 by segan             #+#    #+#             */
-/*   Updated: 2023/04/03 12:09:58 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/05 13:46:35 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_philo	**init_philo(t_rule rule, pthread_mutex_t **forks)
 		if (philo[i] == NULL)
 			return (free_philo(philo, rule.num_of_philos));
 		philo[i]->num_of_each_philo_eat = rule.num_of_each_phil_eat;
+		philo[i]->whoami = i;
 		philo[i]->rule = &rule;
 		philo[i]->left_fork = get_left_fork(forks, i);
 		philo[i]->right_fork = get_right_fork(forks, i, rule.num_of_philos);

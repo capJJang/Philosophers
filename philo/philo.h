@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/04 13:11:54 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/05 17:03:23 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <pthread.h>
 # include <limits.h>
 # include <stdio.h>
+# include <sys/time.h>
 
 typedef struct s_rule
 {
@@ -35,17 +36,21 @@ typedef struct s_philo
 	t_rule			*rule;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	struct timeval	last_stat;
+	int				whoami;
 	int				num_of_each_philo_eat;
 }				t_philo;
 
 //validation funcs start
 int				argv_validation(int argc, char *argv[], t_rule *rule);
 int				print_err_invalid_arg(void);
+void			print_philo_stat(long long time, int whoami, const char *stat);
 //validation funcs end
 
 int				ft_atoi(char *s);
+long long		calc_time(struct timeval old_time, struct timeval recent_time);
 //print util funcs start
-void	print_rule(t_rule rule);
+void			print_rule(t_rule rule);
 //print util funcs end
 
 //init funcs start
@@ -63,6 +68,16 @@ int				free_forks_and_philo(pthread_mutex_t **forks, \
 //free funcs end
 
 //
-void	enter_dining_room(t_philo **philo);
+void			enter_dining_room(t_philo **philo);
 //
+
+//philo_stat funcs start;
+void			*run_dining(void *arg);
+void			enter_dining_room(t_philo **philo);
+int				get_fork(t_philo *philo);
+void			return_fork(t_philo *philo);
+void			eating(t_philo *philo);
+void			thinking(t_philo *philo);
+void			sleeping(t_philo *philo);
+//philo_stat funcs end;
 #endif
