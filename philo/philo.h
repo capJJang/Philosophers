@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/05 17:03:23 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/05 20:10:21 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_philo
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	struct timeval	last_stat;
+	bool			alive;
 	int				whoami;
 	int				num_of_each_philo_eat;
 }				t_philo;
@@ -67,15 +68,12 @@ int				free_forks_and_philo(pthread_mutex_t **forks, \
 				t_philo **philo, int philo_cnt);
 //free funcs end
 
-//
-void			enter_dining_room(t_philo **philo);
-//
-
 //philo_stat funcs start;
 void			*run_dining(void *arg);
 void			enter_dining_room(t_philo **philo);
 int				get_fork(t_philo *philo);
 void			return_fork(t_philo *philo);
+void			detect_philo_death(t_philo **philo, int num_of_philos);
 void			eating(t_philo *philo);
 void			thinking(t_philo *philo);
 void			sleeping(t_philo *philo);

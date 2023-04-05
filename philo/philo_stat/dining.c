@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/05 17:08:58 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/05 20:09:46 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,21 @@ void	*run_dining(void *arg)
 	return (NULL);
 }
 
+void	detect_philo_death(t_philo **philo, int num_of_philos)
+{
+	int	i;
+
+	i = 0;
+	while(1)
+	{
+		if (philo[i]->alive == false)
+			break;
+		i++;
+		if (i == num_of_philos)
+			i = 0;
+	}
+}
+
 void	enter_dining_room(t_philo **philo)
 {
 	struct timeval	init_time;
@@ -49,4 +64,5 @@ void	enter_dining_room(t_philo **philo)
 		pthread_create(&philo[i]->thread, NULL, run_dining, philo[i]);
 		pthread_detach(philo[i++]->thread);
 	}
+	detect_philo_death(philo, num_of_philos);
 }
