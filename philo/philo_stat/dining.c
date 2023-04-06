@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/05 20:09:46 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/06 15:53:25 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,35 @@ void	detect_philo_death(t_philo **philo, int num_of_philos)
 	int	i;
 
 	i = 0;
-	while(1)
+	while (1)
 	{
 		if (philo[i]->alive == false)
-			break;
+			break ;
 		i++;
 		if (i == num_of_philos)
 			i = 0;
+	}
+}
+
+void	detect_philo_eat_enough(t_philo **philo, int num_of_philos)
+{
+	int		i;
+	int		j;
+	bool	*eat_enough;
+
+	eat_enough = (bool *)malloc(sizeof(bool) * num_of_philos);
+	i = 0;
+	memset(eat_enough, 0, num_of_philos);
+	while (1)
+	{
+		if (philo[i]->num_of_each_philo_eat <= 0)
+			eat_enough[i] = true;
+		j = 0;
+		while (j < num_of_philos)
+		{
+			if (eat_enough[j] ==
+		}
+
 	}
 }
 
@@ -64,5 +86,8 @@ void	enter_dining_room(t_philo **philo)
 		pthread_create(&philo[i]->thread, NULL, run_dining, philo[i]);
 		pthread_detach(philo[i++]->thread);
 	}
-	detect_philo_death(philo, num_of_philos);
+	if (philo[0]->rule->num_of_each_phil_eat > 0)
+		detect_philo_eat_enough(philo, num_of_philos);
+	else
+		detect_philo_death(philo, num_of_philos);
 }
