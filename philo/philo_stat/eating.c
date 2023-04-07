@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 12:38:15 by segan             #+#    #+#             */
-/*   Updated: 2023/04/05 17:06:44 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/07 16:19:10 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,19 @@ int	get_fork(t_philo *philo)
 	struct timeval	start;
 	long int		elapsed_time;
 
-	start = philo->last_stat;
-	pthread_mutex_lock(philo->left_fork);
-	pthread_mutex_lock(philo->right_fork);
+	if (philo->whoami % 2 == 0)
+	{
+		pthread_mutex_lock(philo->left_fork);
+		pthread_mutex_lock(philo->right_fork);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->left_fork);
+		pthread_mutex_lock(philo->right_fork);
+	}
 	gettimeofday(&end, NULL);
-	//print "has taken fork"
-	elapsed_time = calc_time(end, philo->last_stat);
-	if (elapsed_time > philo->rule->time_to_die)
-		//print "has died"
-	//print "eating"
+	//if (elapsed_time > philo->rule->time_to_die)
+	//	//print "has died"
 	usleep(philo->rule->time_to_eat);
 	return (0);
 }
@@ -39,9 +43,7 @@ void	return_fork(t_philo *philo)
 
 void	eating(t_philo *philo)
 {
-	if (get_fork(philo) == -1)
-		return (return_fork(philo));
-	//print "eating"
+	print_philo_stat(philo->rule->dining_start_time, philo->whoami, "eating");
 	usleep(philo->rule->time_to_eat);
 	return (return_fork(philo));
 }

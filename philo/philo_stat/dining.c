@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/06 15:53:25 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/07 16:33:41 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,10 @@ void	*run_dining(void *arg)
 	while (1)
 	{
 		if (philo->num_of_each_philo_eat == 0)
-			return (NULL);
-		if (philo->whoami % 2 == 0)
-		{
-			eating(philo);
-			thinking(philo);
-		}
-		else
-		{
-			thinking(philo);
-			eating(philo);
-		}
+			break ;
+		if (thinking(philo) == -1)
+			break ;
+		eating(philo);
 		sleeping(philo);
 	}
 	return (NULL);
@@ -56,37 +49,41 @@ void	detect_philo_eat_enough(t_philo **philo, int num_of_philos)
 	int		i;
 	int		j;
 	bool	*eat_enough;
+	bool	end_simul;
 
 	eat_enough = (bool *)malloc(sizeof(bool) * num_of_philos);
 	i = 0;
 	memset(eat_enough, 0, num_of_philos);
 	while (1)
 	{
+		end_simul = true;
 		if (philo[i]->num_of_each_philo_eat <= 0)
 			eat_enough[i] = true;
 		j = 0;
 		while (j < num_of_philos)
 		{
-			if (eat_enough[j] ==
+			if (eat_enough[j] == false)
+				end_simul = false;
 		}
-
+		if (end_simul == true)
+			break ;
 	}
+	free(eat_enough);
 }
 
-void	enter_dining_room(t_philo **philo)
+void	enter_dining_room(t_philo **philo, int argc)
 {
-	struct timeval	init_time;
 	int				i;
 	const int		num_of_philos = philo[0]->rule->num_of_philos;
 
 	i = 0;
-	gettimeofday(&init_time, NULL);
 	while (i < num_of_philos)
 	{
+		gettimeofday(&philo[i]->dining_start, NULL);
 		pthread_create(&philo[i]->thread, NULL, run_dining, philo[i]);
 		pthread_detach(philo[i++]->thread);
 	}
-	if (philo[0]->rule->num_of_each_phil_eat > 0)
+	if (argc == 6)
 		detect_philo_eat_enough(philo, num_of_philos);
 	else
 		detect_philo_death(philo, num_of_philos);

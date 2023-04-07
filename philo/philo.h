@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/06 13:04:42 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/07 16:25:12 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 
 typedef struct s_rule
 {
-	int	num_of_philos;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	num_of_each_phil_eat;
+	int				num_of_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_of_each_phil_eat;
 }				t_rule;
 
 typedef struct s_philo
@@ -37,7 +37,9 @@ typedef struct s_philo
 	t_rule			*rule;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	struct timeval	last_stat;
+	pthread_mutex_t	printer;
+	struct timeval	last_stat_time;
+	struct timeval	dining_start;
 	bool			alive;
 	int				whoami;
 	int				num_of_each_philo_eat;
@@ -46,11 +48,11 @@ typedef struct s_philo
 //validation funcs start
 int				argv_validation(int argc, char *argv[], t_rule *rule);
 int				print_err_invalid_arg(void);
-void			print_philo_stat(long long time, int whoami, const char *stat);
+void			print_philo_stat(struct timeval start, int whoami, char *stat);
 //validation funcs end
 
 int				ft_atoi(char *s);
-long long		calc_time(struct timeval old_time, struct timeval recent_time);
+long long		calc_time(struct timeval start_dining);
 //print util funcs start
 void			print_rule(t_rule rule);
 //print util funcs end
@@ -71,7 +73,7 @@ int				free_forks_and_philo(pthread_mutex_t **forks, \
 
 //philo_stat funcs start;
 void			*run_dining(void *arg);
-void			enter_dining_room(t_philo **philo);
+void			enter_dining_room(t_philo **philo, int argc);
 int				get_fork(t_philo *philo);
 void			return_fork(t_philo *philo);
 void			detect_philo_death(t_philo **philo, int num_of_philos);
