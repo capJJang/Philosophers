@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/08 14:25:16 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/09 19:25:15 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_philo
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	printer;
-	struct timeval	last_stat_time;
+	struct timeval	last_eating;
 	struct timeval	dining_start;
 	bool			alive;
 	int				whoami;
@@ -51,8 +51,8 @@ int				print_err_invalid_arg(void);
 //validation funcs end
 
 int				ft_atoi(char *s);
-long long		calc_time(struct timeval start_dining);
-
+long long		calc_time(struct timeval based_time);
+long long		calc_time2(struct timeval past, struct timeval present);
 
 //print util funcs start
 void			print_rule(t_rule rule);
