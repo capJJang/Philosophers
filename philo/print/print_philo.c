@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:01:15 by segan             #+#    #+#             */
-/*   Updated: 2023/04/07 16:12:14 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/08 21:25:49 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,16 @@ void	print_rule(t_rule rule)
 	printf("num of each philo eat : %d\n", rule.num_of_each_phil_eat);
 }
 
-void	print_philo_stat(struct timeval start, int whoami, char *stat)
+void	print_philo_stat(t_philo *philo, int whoami, char *stat)
 {
-	long long	time;
+	long long		time;
+	pthread_mutex_t	printer_mutex;
 
-	time = calc_time(start);
+	time = calc_time(philo->dining_start);
+	pthread_mutex_init(&printer_mutex, NULL);
+	pthread_mutex_lock(&printer_mutex);
+	if (philo->alive == false)
+		return ;
 	printf("%lld %d %s\n", time, whoami + 1, stat);
+	pthread_mutex_unlock(&printer_mutex);
 }

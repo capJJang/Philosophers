@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/07 16:33:41 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/08 21:00:03 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@ void	*run_dining(void *arg)
 	return (NULL);
 }
 
+void	kill_philo(t_philo **philo, int num_of_philos)
+{
+	int	i;
+
+	i = 0;
+	while (i < num_of_philos)
+		philo[i++]->alive = false;
+}
+
 void	detect_philo_death(t_philo **philo, int num_of_philos)
 {
 	int	i;
@@ -42,6 +51,7 @@ void	detect_philo_death(t_philo **philo, int num_of_philos)
 		if (i == num_of_philos)
 			i = 0;
 	}
+	kill_philo(philo, num_of_philos);
 }
 
 void	detect_philo_eat_enough(t_philo **philo, int num_of_philos)
@@ -69,6 +79,7 @@ void	detect_philo_eat_enough(t_philo **philo, int num_of_philos)
 			break ;
 	}
 	free(eat_enough);
+	kill_philo(philo, num_of_philos);
 }
 
 void	enter_dining_room(t_philo **philo, int argc)
@@ -80,6 +91,7 @@ void	enter_dining_room(t_philo **philo, int argc)
 	while (i < num_of_philos)
 	{
 		gettimeofday(&philo[i]->dining_start, NULL);
+		// print_philo_stat(philo[i], i, "start");
 		pthread_create(&philo[i]->thread, NULL, run_dining, philo[i]);
 		pthread_detach(philo[i++]->thread);
 	}

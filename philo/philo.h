@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/07 16:25:12 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/08 14:25:16 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,15 @@ typedef struct s_philo
 //validation funcs start
 int				argv_validation(int argc, char *argv[], t_rule *rule);
 int				print_err_invalid_arg(void);
-void			print_philo_stat(struct timeval start, int whoami, char *stat);
 //validation funcs end
 
 int				ft_atoi(char *s);
 long long		calc_time(struct timeval start_dining);
+
+
 //print util funcs start
 void			print_rule(t_rule rule);
+void			print_philo_stat(t_philo *philo, int whoami, char *stat);
 //print util funcs end
 
 //init funcs start
@@ -78,7 +80,7 @@ int				get_fork(t_philo *philo);
 void			return_fork(t_philo *philo);
 void			detect_philo_death(t_philo **philo, int num_of_philos);
 void			eating(t_philo *philo);
-void			thinking(t_philo *philo);
+int				thinking(t_philo *philo);
 void			sleeping(t_philo *philo);
 //philo_stat funcs end;
 #endif
