@@ -6,25 +6,25 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:49:03 by segan             #+#    #+#             */
-/*   Updated: 2023/04/09 19:31:45 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/11 16:38:27 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	odd_philo(t_philo *philo)
+void	odd_philo_get_fork(t_philo *philo)
 {
-	pthread_mutex_lock(philo->right_fork);
-	print_philo_stat(philo, philo->whoami, "has taken a fork");
 	pthread_mutex_lock(philo->left_fork);
+	print_philo_stat(philo, philo->whoami, "has taken a fork");
+	pthread_mutex_lock(philo->right_fork);
 	print_philo_stat(philo, philo->whoami, "has taken a fork");
 }
 
-void	even_philo(t_philo *philo)
+void	even_philo_get_fork(t_philo *philo)
 {
-	pthread_mutex_lock(philo->left_fork);
-	print_philo_stat(philo, philo->whoami, "has taken a fork");
 	pthread_mutex_lock(philo->right_fork);
+	print_philo_stat(philo, philo->whoami, "has taken a fork");
+	pthread_mutex_lock(philo->left_fork);
 	print_philo_stat(philo, philo->whoami, "has taken a fork");
 }
 
@@ -41,9 +41,9 @@ int	am_i_alive(t_philo *philo)
 int	get_fork(t_philo *philo)
 {
 	if (philo->whoami % 2 == 0)
-		even_philo(philo);
+		even_philo_get_fork(philo);
 	else
-		odd_philo(philo);
+		odd_philo_get_fork(philo);
 	return (am_i_alive(philo));
 }
 
@@ -52,9 +52,9 @@ int	thinking(t_philo *philo)
 	print_philo_stat(philo, philo->whoami, "thinking");
 	if (get_fork(philo) == 0)
 	{
+		philo->alive = false;
 		print_philo_stat(philo, philo->whoami, "died");
 		return_fork(philo);
-		philo->alive = false;
 		return (0);
 	}
 	return (1);

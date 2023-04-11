@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/09 20:07:12 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/11 18:21:28 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	*run_dining(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	gettimeofday(&philo->dining_start, NULL);
 	philo->last_eating = philo->dining_start;
 	while (1)
 	{
@@ -50,37 +51,43 @@ void	detect_philo_death(t_philo **philo, int num_of_philos)
 			break ;
 		i++;
 		if (i == num_of_philos)
+		{
 			i = 0;
+			usleep(100);
+		}
 	}
-	kill_philo(philo, num_of_philos);
+	//kill_philo(philo, num_of_philos);
 }
 
 void	detect_philo_eat_enough(t_philo **philo, int num_of_philos)
 {
 	int		i;
-	int		j;
 	bool	*eat_enough;
 	bool	end_simul;
 
 	eat_enough = (bool *)malloc(sizeof(bool) * num_of_philos);
-	i = 0;
 	memset(eat_enough, 0, num_of_philos);
 	while (1)
 	{
 		end_simul = true;
-		if (philo[i]->num_of_each_philo_eat <= 0)
-			eat_enough[i] = true;
-		j = 0;
-		while (j < num_of_philos)
+		i = 0;
+		while (i < num_of_philos)
 		{
-			if (eat_enough[j] == false)
+			if (philo[i]->num_of_each_philo_eat <= 0)
+				eat_enough[i++] = true;
+		}
+		i = 0;
+		while (i < num_of_philos)
+		{
+			if (eat_enough[i++] == false)
+			{
 				end_simul = false;
+				break ;
+			}
 		}
 		if (end_simul == true)
-			break ;
+			return (free(eat_enough));
 	}
-	free(eat_enough);
-	kill_philo(philo, num_of_philos);
 }
 
 void	enter_dining_room(t_philo **philo, int argc)
@@ -91,9 +98,16 @@ void	enter_dining_room(t_philo **philo, int argc)
 	i = 0;
 	while (i < num_of_philos)
 	{
-		gettimeofday(&philo[i]->dining_start, NULL);
 		pthread_create(&philo[i]->thread, NULL, run_dining, philo[i]);
-		pthread_detach(philo[i++]->thread);
+		pthread_detach(philo[i]->thread);
+		i += 2;
+	}
+	i = 1;
+	while (i < num_of_philos)
+	{
+		pthread_create(&philo[i]->thread, NULL, run_dining, philo[i]);
+		pthread_detach(philo[i]->thread);
+		i += 2;
 	}
 	if (argc == 6)
 		detect_philo_eat_enough(philo, num_of_philos);

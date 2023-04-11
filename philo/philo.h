@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/09 19:25:15 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/11 16:10:18 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdbool.h>
+# include <stdatomic.h>
 # include <stdlib.h>
 # include <string.h>
 # include <pthread.h>
@@ -37,10 +38,10 @@ typedef struct s_philo
 	t_rule			*rule;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	printer;
+	pthread_mutex_t	*printer;
 	struct timeval	last_eating;
 	struct timeval	dining_start;
-	bool			alive;
+	atomic_bool		alive;
 	int				whoami;
 	int				num_of_each_philo_eat;
 }				t_philo;
@@ -60,7 +61,7 @@ void			print_philo_stat(t_philo *philo, int whoami, char *stat);
 //print util funcs end
 
 //init funcs start
-t_philo			**init_philo(t_rule rule, pthread_mutex_t **forks);
+t_philo			**init_philo(t_rule rule, pthread_mutex_t **forks, pthread_mutex_t *printer);
 pthread_mutex_t	**init_mutex(int num_of_forks);
 pthread_mutex_t	*get_right_fork(pthread_mutex_t **forks, int i, int cnt);
 pthread_mutex_t	*get_left_fork(pthread_mutex_t **forks, int i);

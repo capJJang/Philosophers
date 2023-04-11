@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 12:38:15 by segan             #+#    #+#             */
-/*   Updated: 2023/04/09 19:34:01 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/11 18:23:17 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,24 @@
 
 void	return_fork(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	if (philo->whoami % 2 == 0)
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		pthread_mutex_unlock(philo->left_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);
+	}
 }
 
 void	eating(t_philo *philo)
 {
+	gettimeofday(&philo->last_eating, NULL);
 	print_philo_stat(philo, philo->whoami, "is eating");
 	usleep(philo->rule->time_to_eat * 1000);
-	gettimeofday(&philo->last_eating, NULL);
+	philo->num_of_each_philo_eat--;
+	print_philo_stat(philo, philo->whoami, "is sleeping");
 	return (return_fork(philo));
 }

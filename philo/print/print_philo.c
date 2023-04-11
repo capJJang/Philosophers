@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 12:01:15 by segan             #+#    #+#             */
-/*   Updated: 2023/04/08 21:25:49 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/10 20:01:24 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ void	print_rule(t_rule rule)
 void	print_philo_stat(t_philo *philo, int whoami, char *stat)
 {
 	long long		time;
-	pthread_mutex_t	printer_mutex;
 
 	time = calc_time(philo->dining_start);
-	pthread_mutex_init(&printer_mutex, NULL);
-	pthread_mutex_lock(&printer_mutex);
+	pthread_mutex_lock(philo->printer);
 	if (philo->alive == false)
+	{
+		printf("%lld %d %s\n", time, whoami + 1, stat);
 		return ;
+	}
 	printf("%lld %d %s\n", time, whoami + 1, stat);
-	pthread_mutex_unlock(&printer_mutex);
+	pthread_mutex_unlock(philo->printer);
 }
