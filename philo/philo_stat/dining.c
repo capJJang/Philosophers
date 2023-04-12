@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/11 18:21:28 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/12 20:35:57 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ void	detect_philo_death(t_philo **philo, int num_of_philos)
 		if (i == num_of_philos)
 		{
 			i = 0;
-			usleep(100);
+			usleep(10);
 		}
 	}
-	//kill_philo(philo, num_of_philos);
 }
 
 void	detect_philo_eat_enough(t_philo **philo, int num_of_philos)
@@ -80,10 +79,7 @@ void	detect_philo_eat_enough(t_philo **philo, int num_of_philos)
 		while (i < num_of_philos)
 		{
 			if (eat_enough[i++] == false)
-			{
 				end_simul = false;
-				break ;
-			}
 		}
 		if (end_simul == true)
 			return (free(eat_enough));
@@ -99,6 +95,7 @@ void	enter_dining_room(t_philo **philo, int argc)
 	while (i < num_of_philos)
 	{
 		pthread_create(&philo[i]->thread, NULL, run_dining, philo[i]);
+		//pthread_create(&philo[i]->monitor_thread, NULL, run_dining, philo[i]);
 		pthread_detach(philo[i]->thread);
 		i += 2;
 	}

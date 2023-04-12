@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/11 16:10:18 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/12 20:45:05 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ typedef struct s_rule
 typedef struct s_philo
 {
 	pthread_t		thread;
+	pthread_t		monitor_thread;
 	t_rule			*rule;
+	pthread_mutex_t	*elapsed_time;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*printer;
@@ -61,7 +63,7 @@ void			print_philo_stat(t_philo *philo, int whoami, char *stat);
 //print util funcs end
 
 //init funcs start
-t_philo			**init_philo(t_rule rule, pthread_mutex_t **forks, pthread_mutex_t *printer);
+t_philo			**init_philo(t_rule rule, pthread_mutex_t **forks, pthread_mutex_t *p);
 pthread_mutex_t	**init_mutex(int num_of_forks);
 pthread_mutex_t	*get_right_fork(pthread_mutex_t **forks, int i, int cnt);
 pthread_mutex_t	*get_left_fork(pthread_mutex_t **forks, int i);
@@ -83,5 +85,7 @@ void			detect_philo_death(t_philo **philo, int num_of_philos);
 void			eating(t_philo *philo);
 int				thinking(t_philo *philo);
 void			sleeping(t_philo *philo);
+int				am_i_alive(t_philo *philo);
+int				dying(t_philo *philo);
 //philo_stat funcs end;
 #endif
