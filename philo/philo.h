@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/12 20:45:05 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/14 17:48:23 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 typedef struct s_rule
 {
 	int				num_of_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	useconds_t		time_to_eat;
+	useconds_t		time_to_die;
+	useconds_t		time_to_sleep;
 	int				num_of_each_phil_eat;
 }				t_rule;
 

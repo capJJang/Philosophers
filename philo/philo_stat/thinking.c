@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:49:03 by segan             #+#    #+#             */
-/*   Updated: 2023/04/12 17:14:53 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/14 17:38:48 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,18 @@ int	odd_philo_get_fork(t_philo *philo)
 	usleep(10);
 	pthread_mutex_lock(philo->left_fork);
 	print_philo_stat(philo, philo->whoami, "has taken a fork");
-	if (am_i_alive(philo) == 0)
-		return (0);
 	pthread_mutex_lock(philo->right_fork);
 	print_philo_stat(philo, philo->whoami, "has taken a fork");
-	return (am_i_alive(philo));
+	return (1);
 }
 
 int	even_philo_get_fork(t_philo *philo)
 {
 	pthread_mutex_lock(philo->right_fork);
 	print_philo_stat(philo, philo->whoami, "has taken a fork");
-	if (am_i_alive(philo) == 0)
-		return (0);
 	pthread_mutex_lock(philo->left_fork);
 	print_philo_stat(philo, philo->whoami, "has taken a fork");
-	return (am_i_alive(philo));
+	return (1);
 }
 
 int	get_fork(t_philo *philo)

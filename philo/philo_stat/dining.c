@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/12 20:35:57 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/14 17:49:20 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void	*run_dining(void *arg)
 	{
 		if (philo->num_of_each_philo_eat == 0)
 			break ;
-		if (thinking(philo) == 0)
-			break ;
+		thinking(philo);
 		eating(philo);
 		sleeping(philo);
 	}
@@ -40,23 +39,22 @@ void	kill_philo(t_philo **philo, int num_of_philos)
 		philo[i++]->alive = false;
 }
 
-void	detect_philo_death(t_philo **philo, int num_of_philos)
-{
-	int	i;
+//void	detect_philo_death(t_philo **philo, int num_of_philos)
+//{
+//	int	i;
 
-	i = 0;
-	while (1)
-	{
-		if (philo[i]->alive == false)
-			break ;
-		i++;
-		if (i == num_of_philos)
-		{
-			i = 0;
-			usleep(10);
-		}
-	}
-}
+//	i = 0;
+//	while (1)
+//	{
+//		if (philo[i++]->alive == false)
+//			break ;
+//		if (i == num_of_philos)
+//		{
+//			i = 0;
+//			usleep(10);
+//		}
+//	}
+//}
 
 void	detect_philo_eat_enough(t_philo **philo, int num_of_philos)
 {
@@ -86,6 +84,24 @@ void	detect_philo_eat_enough(t_philo **philo, int num_of_philos)
 	}
 }
 
+void	*detector(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	while (1)
+	{
+		if (calc_time(philo->last_eating) > philo->rule->time_to_die)
+		{
+			philo->alive = false;
+			break ;
+		}
+		usleep(100);
+	}
+	print_philo_stat(philo, philo->whoami, "is dead");
+	return (NULL);
+}
+
 void	enter_dining_room(t_philo **philo, int argc)
 {
 	int				i;
@@ -95,8 +111,9 @@ void	enter_dining_room(t_philo **philo, int argc)
 	while (i < num_of_philos)
 	{
 		pthread_create(&philo[i]->thread, NULL, run_dining, philo[i]);
-		//pthread_create(&philo[i]->monitor_thread, NULL, run_dining, philo[i]);
+		pthread_create(&philo[i]->monitor_thread, NULL, detector, philo[i]);
 		pthread_detach(philo[i]->thread);
+		pthread_detach(philo[i]->monitor_thread);
 		i += 2;
 	}
 	i = 1;
@@ -106,8 +123,10 @@ void	enter_dining_room(t_philo **philo, int argc)
 		pthread_detach(philo[i]->thread);
 		i += 2;
 	}
-	if (argc == 6)
-		detect_philo_eat_enough(philo, num_of_philos);
-	else
-		detect_philo_death(philo, num_of_philos);
+	(void)argc;
+	//if (argc == 6)
+	//	detect_philo_eat_enough(philo, num_of_philos);
+	//else
+	//	detect_philo_death(philo, num_of_philos);
+
 }
