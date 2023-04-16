@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/14 17:48:23 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/16 23:56:25 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,6 @@ void			sleeping(t_philo *philo);
 int				am_i_alive(t_philo *philo);
 int				dying(t_philo *philo);
 //philo_stat funcs end;
+
+void	kill_philo(t_philo **philo, int num_of_philos);
 #endif

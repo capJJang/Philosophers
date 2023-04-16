@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:20:11 by segan             #+#    #+#             */
-/*   Updated: 2023/04/14 17:47:09 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/17 02:06:08 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,41 @@
 void	wait_everyones_death(t_philo **philo)
 {
 	int		i;
-	bool	everyones_dead;
+	bool	everyone_is_dead;
+	bool	someone_died;
 
 	i = 0;
-	everyones_dead = true;
+	everyone_is_dead = true;
+	someone_died = false;
 	while (1)
 	{
-		printf("asdf\n");
-		if (philo[i++]->alive == false)
-			everyones_dead = false;
-		if (i == philo[0]->rule->num_of_philos && everyones_dead == false)
+		if (philo[i]->alive == true)
 		{
+			if(someone_died)
+			{
+				kill_philo(philo, philo[0]->rule->num_of_philos);
+				everyone_is_dead = true;
+			}
+		}
+		else
+		{
+			kill_philo(philo, philo[0]->rule->num_of_philos);
+			someone_died = true;
+		}
+		i++;
+		if (i == philo[0]->rule->num_of_philos)
+		{
+					// printf("asdf\n");
 			i = 0;
-			everyones_dead = true;
+			if (everyone_is_dead == true)
+			{
+				printf("simulation ends\n");
+				break ;
+			}
+			else
+				everyone_is_dead = true ;
 			usleep(100);
 		}
-		else if (i == philo[0]->rule->num_of_philos && everyones_dead == true)
-			break ;
 	}
 }
 
@@ -49,8 +67,8 @@ int	main(int argc, char *argv[])
 		return (0);
 	printer = malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(printer, NULL);
-	if (printer == NULL)
-		return ((int) free_forks(forks, rule.num_of_philos));
+	// if (printer == NULL)
+	// 	return ((int) free_forks(forks, rule.num_of_philos));
 	philo = init_philo(rule, forks, printer);
 	if (philo == NULL)
 	{

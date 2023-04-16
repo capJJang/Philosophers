@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/14 17:49:20 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/17 00:59:40 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,17 @@ void	*run_dining(void *arg)
 	philo = (t_philo *)arg;
 	gettimeofday(&philo->dining_start, NULL);
 	philo->last_eating = philo->dining_start;
-	while (1)
+	while (philo->alive)
 	{
 		if (philo->num_of_each_philo_eat == 0)
+		{
+			philo->alive = false;
+			print_philo_stat(philo, philo->whoami, "eat enough");
 			break ;
+		}
 		thinking(philo);
+		if (philo->alive)
+			return (NULL);
 		eating(philo);
 		sleeping(philo);
 	}
@@ -91,12 +97,14 @@ void	*detector(void *arg)
 	philo = (t_philo *)arg;
 	while (1)
 	{
+		if (philo->alive == false)
+			break ;
 		if (calc_time(philo->last_eating) > philo->rule->time_to_die)
 		{
 			philo->alive = false;
 			break ;
 		}
-		usleep(100);
+		// usleep(100);
 	}
 	print_philo_stat(philo, philo->whoami, "is dead");
 	return (NULL);
