@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:20:11 by segan             #+#    #+#             */
-/*   Updated: 2023/04/11 18:19:04 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/17 21:43:31 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ int	main(int argc, char *argv[])
 	forks = init_mutex(rule.num_of_philos);
 	if (forks == NULL)
 		return (0);
-	printer = malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(printer, NULL);
+	printer = init_printer();
 	if (printer == NULL)
 		return ((int) free_forks(forks, rule.num_of_philos));
 	philo = init_philo(rule, forks, printer);
 	if (philo == NULL)
-		return (free_forks_and_philo(forks, philo, rule.num_of_philos));
+		return \
+		(free_forks_printer_philo(forks, printer, philo, rule.num_of_philos));
 	enter_dining_room(philo, argc);
-	free_forks_and_philo(forks, philo, rule.num_of_philos);
+	print_simul_end(printer);
+	free_forks_printer_philo(forks, printer, philo, rule.num_of_philos);
 }

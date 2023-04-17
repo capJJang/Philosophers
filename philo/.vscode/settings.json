@@ -2,6 +2,7 @@
 	"files.associations": {
 		"atomic": "c",
 		"stdatomic.h": "c",
-		"type_traits": "c"
+		"type_traits": "c",
+		"philo.h": "c"
 	}
 }

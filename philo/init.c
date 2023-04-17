@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 05:00:32 by segan             #+#    #+#             */
-/*   Updated: 2023/04/11 16:11:56 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/17 16:48:07 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,17 @@ pthread_mutex_t	**init_mutex(int num_of_forks)
 			return (free_forks(mutex, num_of_forks));
 		pthread_mutex_init(mutex[i++], NULL);
 	}
+	return (mutex);
+}
+
+
+pthread_mutex_t	*init_printer(void)
+{
+	pthread_mutex_t	*mutex;
+
+	mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (mutex == NULL)
+		return (mutex);
+	pthread_mutex_init(mutex, NULL);
 	return (mutex);
 }

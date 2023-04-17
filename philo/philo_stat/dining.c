@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/11 18:21:28 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/17 20:11:50 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	*run_dining(void *arg)
 	{
 		if (philo->num_of_each_philo_eat == 0)
 			break ;
+		if (philo->alive == false)
+			break ;
 		if (thinking(philo) == 0)
 			break ;
 		eating(philo);
@@ -31,64 +33,6 @@ void	*run_dining(void *arg)
 	return (NULL);
 }
 
-void	kill_philo(t_philo **philo, int num_of_philos)
-{
-	int	i;
-
-	i = 0;
-	while (i < num_of_philos)
-		philo[i++]->alive = false;
-}
-
-void	detect_philo_death(t_philo **philo, int num_of_philos)
-{
-	int	i;
-
-	i = 0;
-	while (1)
-	{
-		if (philo[i]->alive == false)
-			break ;
-		i++;
-		if (i == num_of_philos)
-		{
-			i = 0;
-			usleep(100);
-		}
-	}
-	//kill_philo(philo, num_of_philos);
-}
-
-void	detect_philo_eat_enough(t_philo **philo, int num_of_philos)
-{
-	int		i;
-	bool	*eat_enough;
-	bool	end_simul;
-
-	eat_enough = (bool *)malloc(sizeof(bool) * num_of_philos);
-	memset(eat_enough, 0, num_of_philos);
-	while (1)
-	{
-		end_simul = true;
-		i = 0;
-		while (i < num_of_philos)
-		{
-			if (philo[i]->num_of_each_philo_eat <= 0)
-				eat_enough[i++] = true;
-		}
-		i = 0;
-		while (i < num_of_philos)
-		{
-			if (eat_enough[i++] == false)
-			{
-				end_simul = false;
-				break ;
-			}
-		}
-		if (end_simul == true)
-			return (free(eat_enough));
-	}
-}
 
 void	enter_dining_room(t_philo **philo, int argc)
 {

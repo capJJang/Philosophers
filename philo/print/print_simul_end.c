@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sleeping.c                                         :+:      :+:    :+:   */
+/*   print_simul_end.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/05 15:46:47 by segan             #+#    #+#             */
-/*   Updated: 2023/04/17 19:24:35 by segan            ###   ########.fr       */
+/*   Created: 2023/04/17 21:41:00 by segan             #+#    #+#             */
+/*   Updated: 2023/04/17 21:42:22 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	sleeping(t_philo *philo)
+void	print_simul_end(pthread_mutex_t *printer)
 {
-	print_philo_stat(philo, philo->whoami, "is sleeping");
-	usleep(philo->rule->time_to_sleep * 1000);
+	pthread_mutex_lock(printer);
+	printf("simulation end\n");
+	pthread_mutex_unlock(printer);
 }

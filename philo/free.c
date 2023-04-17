@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 03:10:15 by segan             #+#    #+#             */
-/*   Updated: 2023/04/03 23:20:58 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/17 16:53:07 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ pthread_mutex_t	**free_forks(pthread_mutex_t **forks, int num_of_philos)
 		free(forks[i++]);
 	}
 	free(forks);
-	return (0);
+	return (NULL);
 }
 
 t_philo	**free_philo(t_philo **philo, int num_of_philos)
@@ -34,11 +34,20 @@ t_philo	**free_philo(t_philo **philo, int num_of_philos)
 	while (i < num_of_philos)
 		free(philo[i++]);
 	free(philo);
-	return (0);
+	return (NULL);
 }
 
-int	free_forks_and_philo(pthread_mutex_t **forks, t_philo **philo, int philo_cnt)
+pthread_mutex_t	*free_printer(pthread_mutex_t *printer)
 {
+	pthread_mutex_destroy(printer);
+	free(printer);
+	return (NULL);
+}
+
+int	free_forks_printer_philo(pthread_mutex_t **forks, pthread_mutex_t *printer, \
+t_philo **philo, int philo_cnt)
+{
+	free_printer(printer);
 	free_forks(forks, philo_cnt);
 	free_philo(philo, philo_cnt);
 	return (0);
