@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:10:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/17 21:42:35 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/18 22:22:51 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_rule
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_of_each_phil_eat;
+	atomic_bool		someone_died;
 }				t_rule;
 
 typedef struct s_philo
@@ -43,6 +44,7 @@ typedef struct s_philo
 	struct timeval	dining_start;
 	atomic_bool		alive;
 	atomic_int		num_of_each_philo_eat;
+	atomic_bool		im_full;
 	int				whoami;
 }				t_philo;
 
@@ -87,5 +89,6 @@ void			detect_philo_death(t_philo **philo, int num_of_philos);
 void			eating(t_philo *philo);
 int				thinking(t_philo *philo);
 void			sleeping(t_philo *philo);
+int				am_i_alive(t_philo *philo);
 //philo_stat funcs end;
 #endif

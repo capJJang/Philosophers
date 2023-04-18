@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 13:49:03 by segan             #+#    #+#             */
-/*   Updated: 2023/04/17 21:32:52 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/18 23:49:24 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	odd_philo_get_fork(t_philo *philo)
 	pthread_mutex_lock(philo->left_fork);
 	if (am_i_alive(philo) == 0)
 		return ;
-	print_philo_stat(philo, philo->whoami, "has taken a fork");
+	print_philo_stat(philo, philo->whoami, "has taken left fork");
 	if (am_i_alive(philo) == 0)
 		return ;
 	pthread_mutex_lock(philo->right_fork);
 	if (am_i_alive(philo) == 0)
 		return ;
-	print_philo_stat(philo, philo->whoami, "has taken a fork");
+	print_philo_stat(philo, philo->whoami, "has taken right fork");
 	if (am_i_alive(philo) == 0)
 		return ;
 }
@@ -54,7 +54,7 @@ void	even_philo_get_fork(t_philo *philo)
 	pthread_mutex_lock(philo->right_fork);
 	if (am_i_alive(philo) == 0)
 		return ;
-	print_philo_stat(philo, philo->whoami, "has taken a fork");
+	print_philo_stat(philo, philo->whoami, "has taken right fork");
 	if (philo->rule->num_of_philos == 1)
 		philo->alive = false;
 	if (am_i_alive(philo) == 0)
@@ -62,7 +62,7 @@ void	even_philo_get_fork(t_philo *philo)
 	pthread_mutex_lock(philo->left_fork);
 	if (am_i_alive(philo) == 0)
 		return ;
-	print_philo_stat(philo, philo->whoami, "has taken a fork");
+	print_philo_stat(philo, philo->whoami, "has taken left fork");
 	if (am_i_alive(philo) == 0)
 		return ;
 }

@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 12:38:15 by segan             #+#    #+#             */
-/*   Updated: 2023/04/17 19:25:30 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/18 21:40:53 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	eating(t_philo *philo)
 	gettimeofday(&philo->last_eating, NULL);
 	print_philo_stat(philo, philo->whoami, "is eating");
 	usleep(philo->rule->time_to_eat * 1000);
-	philo->num_of_each_philo_eat--;
+	if (philo->rule->num_of_each_phil_eat != -1)
+		philo->num_of_each_philo_eat--;
 	return (return_fork(philo));
 }

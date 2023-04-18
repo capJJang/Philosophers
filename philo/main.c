@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 01:20:11 by segan             #+#    #+#             */
-/*   Updated: 2023/04/17 21:43:31 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/18 21:41:11 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ int	main(int argc, char *argv[])
 		return \
 		(free_forks_printer_philo(forks, printer, philo, rule.num_of_philos));
 	enter_dining_room(philo, argc);
-	print_simul_end(printer);
 	free_forks_printer_philo(forks, printer, philo, rule.num_of_philos);
 }

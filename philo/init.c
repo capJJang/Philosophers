@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 05:00:32 by segan             #+#    #+#             */
-/*   Updated: 2023/04/17 16:48:07 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/18 21:30:03 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ pthread_mutex_t	*get_right_fork(pthread_mutex_t **forks, int i, int cnt)
 	return (forks[i + 1]);
 }
 
-t_philo	**init_philo(t_rule rule, pthread_mutex_t **forks, pthread_mutex_t *printer)
+t_philo	**init_philo(t_rule rule, pthread_mutex_t **forks, pthread_mutex_t *p)
 {
 	t_philo	**philo;
 	int		i;
@@ -41,8 +41,9 @@ t_philo	**init_philo(t_rule rule, pthread_mutex_t **forks, pthread_mutex_t *prin
 		philo[i]->num_of_each_philo_eat = rule.num_of_each_phil_eat;
 		philo[i]->whoami = i;
 		philo[i]->rule = &rule;
+		philo[i]->im_full = false;
 		philo[i]->alive = true;
-		philo[i]->printer = printer;
+		philo[i]->printer = p;
 		philo[i]->left_fork = get_left_fork(forks, i);
 		philo[i]->right_fork = get_right_fork(forks, i, rule.num_of_philos);
 		i++;
@@ -69,7 +70,6 @@ pthread_mutex_t	**init_mutex(int num_of_forks)
 	}
 	return (mutex);
 }
-
 
 pthread_mutex_t	*init_printer(void)
 {

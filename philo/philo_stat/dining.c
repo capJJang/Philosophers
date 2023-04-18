@@ -6,7 +6,7 @@
 /*   By: segan <segan@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 01:44:51 by segan             #+#    #+#             */
-/*   Updated: 2023/04/17 20:11:50 by segan            ###   ########.fr       */
+/*   Updated: 2023/04/18 23:49:03 by segan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void	*run_dining(void *arg)
 	while (1)
 	{
 		if (philo->num_of_each_philo_eat == 0)
+		{
+			philo->im_full = true;
 			break ;
-		if (philo->alive == false)
+		}
+		if (philo->alive == false || philo->rule->someone_died == true)
 			break ;
 		if (thinking(philo) == 0)
 			break ;
@@ -32,7 +35,6 @@ void	*run_dining(void *arg)
 	}
 	return (NULL);
 }
-
 
 void	enter_dining_room(t_philo **philo, int argc)
 {

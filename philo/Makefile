@@ -6,7 +6,7 @@
 #    By: segan <segan@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/27 01:14:56 by segan             #+#    #+#              #
-#    Updated: 2023/04/17 21:43:03 by segan            ###   ########.fr        #
+#    Updated: 2023/04/18 21:01:43 by segan            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS = main.c validation.c init.c ft_atoi.c calc_time.c\
 OBJS = $(SRCS:.c=.o)
 
 DEBUG = -g -fsanitize=thread
+#DEBUG = -g -fsanitize=address
 
 all : $(NAME)
 
